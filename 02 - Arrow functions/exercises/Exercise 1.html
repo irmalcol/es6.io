@@ -31,15 +31,33 @@
 
 <script>
 
+  // NOTE THAT YOU CAN CHAIN ALL OF THESE TOGETHER WITH DOT
+  // OPERATORS INSTEAD OF ASSIGNING TO VARIABLES ALL THE WAY
+  // THROUGH. SEE THE "ANSWER" FILE.
+
   // Select all the list items on the page and convert to array
+  const videos = Array.from(document.querySelectorAll('[data-time]'));
+  console.table(videos.map(video => video.innerHTML));
 
   // Filter for only the elements that contain the word 'flexbox'
+  const flexVideos = videos.filter(video => video.innerHTML.includes('Flexbox'));
+  console.table(flexVideos.map(video => video.innerHTML));
 
   // map down to a list of time strings
+  const flexTimeStrings = flexVideos.map(video => video.getAttribute('data-time'));
+  console.table(flexTimeStrings);
 
   // map to an array of seconds
+  const flexTimeSeconds = flexTimeStrings.map(string => {
+    const times = string.split(':').map(part => parseInt(part)); // Note the arrow function inside and arrow function. So cool and neat!
+    const seconds = times[0] * 60 + times[1];
+    return seconds;
+  });
+  console.table(flexTimeSeconds);
 
   // reduce to get total
+  const flexTotalTime = flexTimeSeconds.reduce((total, value) => total += value, 0);
+  console.log(flexTotalTime);
 
   // 🔥 This can also be done in a single .reduce(), but we're practicing arrow functions here, so chain them!
 
